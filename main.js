@@ -56,6 +56,7 @@ while (poolPeople.length < 0) {
 
   poolPeople  = results.stillInPool;
   peopleWaiting = _.union(peopleWaiting, results.waitingForElevator);
+  peopleWaiting = _.sortBy(peopleWaiting, 'callId');
 
   stopsThisPass = updateElevators(peopleWaiting, poolOfElevators);
   _.union(output.stops, stopsThisPass);
