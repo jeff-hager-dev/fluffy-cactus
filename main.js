@@ -3,18 +3,28 @@
 var _ = require('underscore');
 
 var Person = require('./person');
+var Elevator = require('./elevator');
 var poolPeople = [];
 var peopleWaiting = [];
 var poolOfElevators = [];
 var numTimeIncrement = 1;
 var data = require('./data/challenge1input.json');
 
+/**
+ * Populate People from data.
+ */
 for(var i = 0; i < data.calls.length; i++) {
   var call = data.calls[i];
   var newPerson = new Person(call.callId, call.callTime, call.startFloor, call.endFloor);
   poolPeople.push(newPerson);
 }
-
+/**
+ * Populate Elevator from data.
+ */
+for(var k = 0; k < data.numberOfElevators; k++ ){
+  poolOfElevators.push(new Elevator(k, 1, data.maxCapacity));
+}
+console.log(poolOfElevators);
 
 var getPeopleFromPool = function (time, poolPeople) {
 
