@@ -1,20 +1,18 @@
-/**
- * Created by CAM0729 on 8/19/2016.
- */
+'use strict';
 var possibleDirs = {"UP": 1, "STILL": 0, "DOWN": -1};
 
 class elevator {
-	constructor() {
+	constructor(name, startFlr, capacity) {
 		this.destFlr = -1;
-		this.curFlr = -1;
-		this.maxPpl = -1;
+		this.curFlr = startFlr;
+		this.maxPpl = capacity;
 		this.numPpl = -1;
 		this.curDir = possibleDirs.STILL;
 		this.people = [];
-        this.name = 1;
+        this.name = name;
 	};
 
-	pickupPerson = function (person) {
+	pickupPerson(person) {
 		if (this.numPpl < this.maxPpl) {
             this.people.push(person);
             this.numPpl+=1;
@@ -29,7 +27,7 @@ class elevator {
 	};
 
 
-    dropPerson = function(person) {
+    dropPerson(person) {
       this.people = people.filter(function(p) {
           return p.callId != person.callId;
       });
@@ -39,12 +37,12 @@ class elevator {
         }
     };
 
-    move = function(dir) {
+    move(dir) {
         this.curFlor += possibleDirs[dir];
     };
 
 
-    setDir = function(flr) {
+    setDir(flr) {
         if(flr < this.curFlr) {
             this.curDir = possibleDirs.DOWN;
         }
@@ -54,3 +52,5 @@ class elevator {
         }
     }
 }
+
+module.exports = elevator;
