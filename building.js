@@ -82,18 +82,23 @@ class building {
 
   run(callback) {
     this.totalTimePast = 0;
+
     while (this.peopleRemaining > 0) {
       this.totalTimePast += numTimeIncrement;
       var stopsThisPass = [];
+
       var results = this.getPeopleFromPool(this.totalTimePast, poolPeople);
       this.poolPeople = results.stillInPool;
-      this.peopleWaiting = _.union(peopleWaiting, results.waitingForElevator);
-      this.peopleWaiting = _.sortBy(peopleWaiting, 'callId');
+      this.peopleWaiting = _.union(this.peopleWaiting, results.waitingForElevator);
+      this.peopleWaiting = _.sortBy(this.peopleWaiting, 'callId');
+
       if (this.peopleWaiting.length === 0) {
         continue;
       }
+
       stopsThisPass = this.updateElevators(this.totalTimePast, this.peopleWaiting, this.poolOfElevators);
       this.peopleRemaining -= stopsThisPass.length;
+
       _.union(output.stops, stopsThisPass);
 
       callback(this.totalTimePast);
