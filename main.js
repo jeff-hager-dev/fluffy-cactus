@@ -19,7 +19,7 @@ var stopId = 1;
 /**
  * Populate People from data.
  */
-for(var i = 0; i < data.calls.length; i++) {
+for (var i = 0; i < data.calls.length; i++) {
   var call = data.calls[i];
   var newPerson = new Person(call.callId, call.callTime, call.startFloor, call.endFloor);
   poolPeople.push(newPerson);
@@ -30,44 +30,43 @@ var peopleRemaining = poolPeople.length;
 
 // To be replaced with a good algorithm
 var SelectNextFloor = function (curFlr) {
-    var person = peopleWaiting[0];
-    return person ? person.startFloor : 0;
+  var person = peopleWaiting[0];
+  return person ? person.startFloor : 0;
 };
 
 
 /**
  * Populate Elevator from data.
  */
-for(var k = 0; k < data.numberOfElevators; k++ ){
+for (var k = 0; k < data.numberOfElevators; k++) {
   poolOfElevators.push(new Elevator(k, 1, data.maxCapacity));
 }
-console.log(poolOfElevators);
 
 var getPeopleFromPool = function (time, poolPeople) {
 
-    var isItMyTurn = function (person) {
-        return person.isItMyTurn(time)
-    };
+  var isItMyTurn = function (person) {
+    return person.isItMyTurn(time)
+  };
 
-    return {
-        "waitingForElevator": _.filter(poolPeople, isItMyTurn),
-        "stillInPool": _.reject(poolPeople, isItMyTurn)
-    };
+  return {
+    "waitingForElevator": _.filter(poolPeople, isItMyTurn),
+    "stillInPool": _.reject(poolPeople, isItMyTurn)
+  };
 };
 
 var updateElevators = function (time, poolWaiting, poolOfElevators) {
   var peopleLeft = 0;
-  for(let i = 0; i < poolOfElevators.length; i++){
+  for (let i = 0; i < poolOfElevators.length; i++) {
     poolOfElevators[i].updatePosition(time, SelectNextFloor);
-    if(poolOfElevators[i].status=="AT_FLOOR"){
+    if (poolOfElevators[i].status == "AT_FLOOR") {
 
-      var logs =  poolOfElevators[i].dropOffPeople(time);
+      var logs = poolOfElevators[i].dropOffPeople(time);
 
-      var peopleOnFloor = _.filter(poolWaiting, function(person){
+      var peopleOnFloor = _.filter(poolWaiting, function (person) {
         return person.startFloor === poolOfElevators[i].curFlr;
       });
 
-        peopleLeft += poolOfElevators[i].exchangePeople(time, peopleOnFloor);
+      peopleLeft += poolOfElevators[i].exchangePeople(time, peopleOnFloor);
     }
   }
   return peopleLeft;
@@ -77,14 +76,16 @@ var totalTimePast = 0;
 
 while (peopleRemaining > 0) {
   totalTimePast += numTimeIncrement;
-  console.log(totalTimePast);
   var stopsThisPass = [];
   var results = getPeopleFromPool(totalTimePast, poolPeople);
 
-  poolPeople  = results.stillInPool;
+  poolPeople = results.stillInPool;
   peopleWaiting = _.union(peopleWaiting, results.waitingForElevator);
   peopleWaiting = _.sortBy(peopleWaiting, 'callId');
-  if(peopleWaiting.length === 0 ){continue; }
+  if (peopleWaiting.length === 0) {
+    continue;
+  }
+  console.log("Time Past: ", totalTimePast, ", People waiting: ", peopleWaiting.length);
   stopsThisPass = updateElevators(totalTimePast, peopleWaiting, poolOfElevators);
   peopleRemaining -= stopsThisPass.length;
   _.union(output.stops, stopsThisPass);
