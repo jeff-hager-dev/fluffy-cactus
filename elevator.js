@@ -1,11 +1,10 @@
-/**
- * Created by CAM0729 on 8/19/2016.
- */
+'use strict';
 var possibleDirs = {"UP": 1, "STILL": 0, "DOWN": -1};
 var status = {"AT_FLOOR": 1, "BETWEEN_FLOORS": 2, "PICKING_UP": 3, "ON_FIRE": 4};
 
 
 class elevator {
+<<<<<<< HEAD
 
 
     constructor() {
@@ -24,6 +23,20 @@ class elevator {
     pickupPerson = function (person) {
         this.status = status.AT_FLOOR;
         if (this.numPpl < this.maxPpl) {
+=======
+	constructor(name, startFlr, capacity) {
+		this.destFlr = -1;
+		this.curFlr = startFlr;
+		this.maxPpl = capacity;
+		this.numPpl = -1;
+		this.curDir = possibleDirs.STILL;
+		this.people = [];
+        this.name = name;
+	};
+
+	pickupPerson(person) {
+		if (this.numPpl < this.maxPpl) {
+>>>>>>> d4932abed115d44fcb08ede86160a5226734297f
             this.people.push(person);
             this.numPpl += 1;
             if (this.destFlr === -1) {
@@ -37,6 +50,7 @@ class elevator {
 
     };
 
+<<<<<<< HEAD
 
     dropPerson = function (person) {
         this.status = status.AT_FLOOR;
@@ -49,19 +63,37 @@ class elevator {
                 this.curDir = possibleDirs.STILL;
             }
             return true;
+=======
+    dropPerson(person) {
+      this.people = people.filter(function(p) {
+          return p.callId != person.callId;
+      });
+        this.numPpl -= 1;
+        if(this.numPpl === 0) {
+            this.curDir = possibleDirs.STILL;
+>>>>>>> d4932abed115d44fcb08ede86160a5226734297f
         }
         return false;
 
     };
 
+<<<<<<< HEAD
     move = function (dir) {
+=======
+    move(dir) {
+>>>>>>> d4932abed115d44fcb08ede86160a5226734297f
         this.curFlor += possibleDirs[dir];
         this.status = status.BETWEEN_FLOORS;
     };
 
 
+<<<<<<< HEAD
     setDir = function (flr) {
         if (flr < this.curFlr) {
+=======
+    setDir(flr) {
+        if(flr < this.curFlr) {
+>>>>>>> d4932abed115d44fcb08ede86160a5226734297f
             this.curDir = possibleDirs.DOWN;
         }
 
@@ -70,3 +102,5 @@ class elevator {
         }
     }
 }
+
+module.exports = elevator;
