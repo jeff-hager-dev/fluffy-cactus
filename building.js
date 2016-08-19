@@ -36,7 +36,7 @@ class building {
 
     for (var i = 0; i < data.calls.length; i++) {
       var call = data.calls[i];
-      var newPerson = new Person(call.callId, call.callTime, call.startFloor, call.endFloor);
+      var newPerson = new Person(call.callId, call.callTime, call.startfloor, call.endfloor);
       this.poolPeople.push(newPerson);
     }
 
