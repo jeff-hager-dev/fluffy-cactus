@@ -34,7 +34,8 @@ class elevator {
 
     //time = endwaittime - START MOVING
     if (this.status === statuses.PICKING_UP) {
-      if (time > this.endWaitTime) {
+      if (time >= this.endWaitTime) {
+        this.endWaitTime = -1;
         this.status = statuses.BETWEEN_FLOORS;
       }
     }
@@ -100,8 +101,12 @@ class elevator {
 
     var peopleWhoLeft = this.letPeopleOff();
 
-    console.log(this.name + ":  Got On: ", this.people.length, ', flr: ', this.curFlr);
-    console.log(this.name + ":  Got Off: ", peopleWhoLeft.length, ', flr: ', this.curFlr);
+    if(this.people.length) {
+      console.log(this.name + ":   ON: ", this.people.length, ', flr: ', this.curFlr, ', DIR: ', this.curDir);
+    }
+    if(peopleWhoLeft.length) {
+      console.log(this.name + ":   OFF: ", peopleWhoLeft.length, ', flr: ', this.curFlr, ', DIR: ', this.curDir);
+    }
     return peopleWhoLeft.length;
   }
 
