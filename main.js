@@ -39,7 +39,7 @@ var SelectNextFloor = function (curFlr) {
       return nextPossibleFloor;
     }
   }
-  return 0;
+  return -1;
 };
 
 
@@ -79,8 +79,6 @@ var updateElevators = function (time, poolWaiting, poolOfElevators) {
   }
   return peopleLeft;
 };
-
-var totalTimePast = 0;
 
 while (peopleRemaining > 0) {
   totalTimePast += numTimeIncrement;
