@@ -1,5 +1,7 @@
 'use strict';
 var possibleDirs = {"UP": 1, "STILL": 0, "DOWN": -1};
+var status = {"AT_FLOOR": 1, "BETWEEN_FLOORS": 2, "PICKING_UP": 3, "ON_FIRE": 4};
+
 
 class elevator {
   constructor(name, startFlr, capacity) {
@@ -14,8 +16,9 @@ class elevator {
     this.endWaitTime = -1;
   };
 
-  pickupPerson(person) {
+  pickupPerson(time, person) {
     if (this.numPpl < this.maxPpl) {
+      if(this.status)
       this.people.push(person);
       this.numPpl += 1;
       if (this.destFlr === -1) {
@@ -28,7 +31,7 @@ class elevator {
     }
   };
 
-  updatePosition(time){
+  updatePosition(time, selectNextFloorFunc){
     console.log("TODO");
   }
 
