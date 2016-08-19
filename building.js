@@ -96,6 +96,7 @@ class building {
     var results = null;
     while (this.peopleRemaining > 0) {
       this.totalTimePast += this.numTimeIncrement;
+      console.log(this.totalTimePast);
       stopsThisPass = [];
 
       results = this.getPeopleFromPool(this.totalTimePast, this.poolPeople);
@@ -115,6 +116,7 @@ class building {
 
       callback(this.totalTimePast);
     }
+    console.log('done');
   }
 
 }
