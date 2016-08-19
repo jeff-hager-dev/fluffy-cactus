@@ -27,7 +27,9 @@ class elevator {
   updatePosition(time, selectNextFloorFunc) {
     if (this.destFlr === -1) {
       this.destFlr = selectNextFloorFunc(this.curFlr);
-      this.setDir(this.destFlr);
+      if(this.destFlr !== -1) {
+        this.setDir(this.destFlr);
+      }
     }
 
     //time = endwaittime - START MOVING
