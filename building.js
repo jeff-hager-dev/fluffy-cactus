@@ -38,9 +38,9 @@ class building {
   }
 
   SelectNextFloor(curFlr) {
-    for (var i = 0; i < peopleWaiting.length; i++) {
-      var nextPossibleFloor = peopleWaiting[i].startFloor;
-      var elevatorWithFloor = _.filter(poolOfElevators, function (elevator) {
+    for (var i = 0; i < this.peopleWaiting.length; i++) {
+      var nextPossibleFloor = this.peopleWaiting[i].startFloor;
+      var elevatorWithFloor = _.filter(this.poolOfElevators, function (elevator) {
         return elevator.destFlr === nextPossibleFloor
       });
       if (elevatorWithFloor.length === 0) {
@@ -62,20 +62,20 @@ class building {
     };
   }
 
-  updateElevators(time, poolWaiting, poolOfElevators) {
+  updateElevators() {
     var peopleLeft = 0;
-    for (let i = 0; i < poolOfElevators.length; i++) {
-      poolOfElevators[i].updatePosition(time, SelectNextFloor);
-      if (poolOfElevators[i].status === 1) {
+    for (let i = 0; i < this.poolOfElevators.length; i++) {
+      this.poolOfElevators[i].updatePosition(this.totalTimePast, SelectNextFloor);
+      if (this.poolOfElevators[i].status === 1) {
 
 
-        var peopleOnFloor = _.filter(poolWaiting, function (person) {
-          return person.startFloor === poolOfElevators[i].curFlr;
+        var peopleOnFloor = _.filter(this.poolWaiting, function (person) {
+          return person.startFloor === this.poolOfElevators[i].curFlr;
         });
 
-        peopleLeft += poolOfElevators[i].exchangePeople(time, peopleOnFloor);
+        peopleLeft += this.poolOfElevators[i].exchangePeople(this.totalTimePast, peopleOnFloor);
       }
-      console.log(poolOfElevators[i]);
+      console.log(this.poolOfElevators[i]);
     }
     return peopleLeft;
   }
