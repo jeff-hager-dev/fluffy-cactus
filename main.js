@@ -56,6 +56,7 @@ var getPeopleFromPool = function (time, poolPeople) {
 };
 
 var updateElevators = function (time, poolWaiting, poolOfElevators) {
+  var peopleLeft = 0;
   for(let i = 0; i < poolOfElevators.length; i++){
     poolOfElevators[i].updatePosition(time, SelectNextFloor);
     if(poolOfElevators[i].status=="AT_FLOOR"){
@@ -66,23 +67,26 @@ var updateElevators = function (time, poolWaiting, poolOfElevators) {
         return person.startFloor === poolOfElevators[i].curFlr;
       });
 
-        poolOfElevators[i].exchangePeople(time, peopleOnFloor);
+        peopleLeft += poolOfElevators[i].exchangePeople(time, peopleOnFloor);
     }
   }
+  return peopleLeft;
 };
 
 var totalTimePast = 0;
 
 while (peopleRemaining > 0) {
   totalTimePast += numTimeIncrement;
+  console.log(totalTimePast);
   var stopsThisPass = [];
   var results = getPeopleFromPool(totalTimePast, poolPeople);
 
   poolPeople  = results.stillInPool;
   peopleWaiting = _.union(peopleWaiting, results.waitingForElevator);
   peopleWaiting = _.sortBy(peopleWaiting, 'callId');
-
-  stopsThisPass = updateElevators(peopleWaiting, poolOfElevators);
+  if(peopleWaiting.length === 0 ){continue; }
+  stopsThisPass = updateElevators(totalTimePast, peopleWaiting, poolOfElevators);
+  peopleRemaining -= stopsThisPass.length;
   _.union(output.stops, stopsThisPass);
 }
 

@@ -93,6 +93,7 @@ class elevator {
 
         console.log("Got On: " + peopleWhoGotOn);
         console.log("Got Off: " + peopleWhoLeft);
+      return peopleWhoLeft.length;
     }
 
     move(dir) {
