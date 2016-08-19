@@ -34,6 +34,13 @@ class building {
       poolPeople.push(newPerson);
     }
 
+    /**
+     * Populate Elevator from data.
+     */
+    for (var k = 0; k < data.numberOfElevators; k++) {
+      this.poolOfElevators.push(new Elevator(k, 1, data.maxCapacity));
+    }
+
     this.peopleRemaining = poolPeople.length;
   }
 
@@ -65,17 +72,19 @@ class building {
   updateElevators() {
     var peopleLeft = 0;
     for (let i = 0; i < this.poolOfElevators.length; i++) {
-      this.poolOfElevators[i].updatePosition(this.totalTimePast, SelectNextFloor);
-      if (this.poolOfElevators[i].status === 1) {
+      var curElevator = this.poolOfElevators[i];
 
+      curElevator.updatePosition(this.totalTimePast, SelectNextFloor);
+      if (curElevator.status === 1) {
 
         var peopleOnFloor = _.filter(this.poolWaiting, function (person) {
           return person.startFloor === this.poolOfElevators[i].curFlr;
         });
 
-        peopleLeft += this.poolOfElevators[i].exchangePeople(this.totalTimePast, peopleOnFloor);
+        peopleLeft += curElevator.exchangePeople(this.totalTimePast, peopleOnFloor);
       }
-      console.log(this.poolOfElevators[i]);
+
+      this.poolOfElevators[i] = curElevator;
     }
     return peopleLeft;
   }
@@ -83,11 +92,14 @@ class building {
   run(callback) {
     this.totalTimePast = 0;
 
+    var stopsThisPass = null;
+    var results = null;
     while (this.peopleRemaining > 0) {
       this.totalTimePast += numTimeIncrement;
-      var stopsThisPass = [];
+      stopsThisPass = [];
 
-      var results = this.getPeopleFromPool(this.totalTimePast, poolPeople);
+      results = this.getPeopleFromPool(this.totalTimePast, poolPeople);
+
       this.poolPeople = results.stillInPool;
       this.peopleWaiting = _.union(this.peopleWaiting, results.waitingForElevator);
       this.peopleWaiting = _.sortBy(this.peopleWaiting, 'callId');
