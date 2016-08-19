@@ -44,7 +44,22 @@ var getPeopleFromPool = function (time, poolPeople) {
 };
 
 var updateElevators = function (time, poolWaiting, poolOfElevators) {
+  for(let i = 0; i < poolOfElevators.length; i++){
+    poolOfElevators[i].updatePosition(time);
+    if(poolOfElevators[i].status=="AT_FLOOR"){
+      var peopleOnFloor = _.filter(poolWaiting, function(person){
+        return person.startFloor === poolOfElevators[i].curFlr;
+      });
 
+      if(peopleOnFloor.length > 0){
+        poolOfElevators[i].status = "WAITING";
+        poolOfElevators[i].startWaitTime = time;
+        poolOfElevators[i].endWaitTime = time+10;
+        poolOfElevators[i].people  = _.union(poolOfElevators[i].people, peopleOnFloor);
+
+      }
+    }
+  }
 };
 
 var totalTimePast = 0;
