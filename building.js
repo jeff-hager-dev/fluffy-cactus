@@ -73,8 +73,8 @@ class building {
     var peopleLeft = 0;
     for (let i = 0; i < this.poolOfElevators.length; i++) {
       var curElevator = this.poolOfElevators[i];
-
-      curElevator.updatePosition(this.totalTimePast, this.SelectNextFloor);
+      var context = this;
+      curElevator.updatePosition(this.totalTimePast, function(curFlr){ context.SelectNextFloor(curFlr);});
       if (curElevator.status === 1) {
 
         var peopleOnFloor = _.filter(this.poolWaiting, function (person) {
@@ -111,7 +111,7 @@ class building {
       stopsThisPass = this.updateElevators();
       this.peopleRemaining -= stopsThisPass.length;
 
-      _.union(output.stops, stopsThisPass);
+      _.union(this.output.stops, stopsThisPass);
 
       callback(this.totalTimePast);
     }
