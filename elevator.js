@@ -90,7 +90,7 @@ class elevator {
         var peopleWhoGotOn = [];
         _.each(peopleOnFloor, function (p) {
             peopleWhoGotOn.push(this.letPersonOn(time, p));
-        });
+        }, this);
 
 
         var peopleWhoLeft = this.letPeopleOff();
