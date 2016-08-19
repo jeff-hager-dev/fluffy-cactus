@@ -71,14 +71,19 @@ class building {
 
   updateElevators() {
     var peopleLeft = 0;
+    var peopleWaiting = this.peopleWaiting;
     for (let i = 0; i < this.poolOfElevators.length; i++) {
       var curElevator = this.poolOfElevators[i];
       var context = this;
       curElevator.updatePosition(this.totalTimePast, function(curFlr){ context.SelectNextFloor(curFlr);});
       if (curElevator.status === 1) {
 
-        var peopleOnFloor = _.filter(this.poolWaiting, function (person) {
-          return person.startFloor === this.poolOfElevators[i].curFlr;
+        var peopleOnFloor = _.filter(peopleWaiting, function (person) {
+          return person.startFloor === curElevator.curFlr;
+        });
+
+        peopleWaiting = _.reject(peopleWaiting, function (person) {
+          return person.startFloor === curElevator.curFlr;
         });
 
         peopleLeft += curElevator.exchangePeople(this.totalTimePast, peopleOnFloor);
@@ -113,6 +118,7 @@ class building {
       this.peopleRemaining -= stopsThisPass;
 
       _.union(this.output.stops, stopsThisPass);
+      callback(this.totalTimePast);
     }
     console.log('done');
   }
