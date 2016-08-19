@@ -30,7 +30,7 @@ class elevator {
         }
 
         //time = endwaittime - START MOVING
-        if (this.status = statuses.PICKING_UP) {
+        if (this.status === statuses.PICKING_UP) {
             if (time > this.endWaitTime) {
                 this.status = statuses.BETWEEN_FLOORS;
             }

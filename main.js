@@ -30,8 +30,16 @@ var peopleRemaining = poolPeople.length;
 
 // To be replaced with a good algorithm
 var SelectNextFloor = function (curFlr) {
-  var person = peopleWaiting[0];
-  return person ? person.startFloor : 0;
+  for (var i = 0; i < peopleWaiting.length; i++) {
+    var nextPossibleFloor = peopleWaiting[i].startFloor;
+    var elevatorWithFloor = _.filter(poolOfElevators, function (elevator) {
+      return elevator.destFlr === nextPossibleFloor
+    });
+    if (elevatorWithFloor.length === 0) {
+      return nextPossibleFloor;
+    }
+  }
+  return 0;
 };
 
 
@@ -58,7 +66,7 @@ var updateElevators = function (time, poolWaiting, poolOfElevators) {
   var peopleLeft = 0;
   for (let i = 0; i < poolOfElevators.length; i++) {
     poolOfElevators[i].updatePosition(time, SelectNextFloor);
-    if (poolOfElevators[i].status == "AT_FLOOR") {
+    if (poolOfElevators[i].status === 1) {
 
       peopleLeft += poolOfElevators[i].exchangePeople(time, peopleOnFloor);
     }
@@ -70,7 +78,6 @@ var updateElevators = function (time, poolWaiting, poolOfElevators) {
 var totalTimePast = 0;
 
 while (peopleRemaining > 0) {
-    console.log("remaining " + peopleRemaining);
   totalTimePast += numTimeIncrement;
   var stopsThisPass = [];
   var results = getPeopleFromPool(totalTimePast, poolPeople);
