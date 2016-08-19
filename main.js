@@ -60,12 +60,6 @@ var updateElevators = function (time, poolWaiting, poolOfElevators) {
     poolOfElevators[i].updatePosition(time, SelectNextFloor);
     if (poolOfElevators[i].status == "AT_FLOOR") {
 
-      var logs = poolOfElevators[i].dropOffPeople(time);
-
-      var peopleOnFloor = _.filter(poolWaiting, function (person) {
-        return person.startFloor === poolOfElevators[i].curFlr;
-      });
-
       peopleLeft += poolOfElevators[i].exchangePeople(time, peopleOnFloor);
     }
     console.log(poolOfElevators[i]);
@@ -76,10 +70,10 @@ var updateElevators = function (time, poolWaiting, poolOfElevators) {
 var totalTimePast = 0;
 
 while (peopleRemaining > 0) {
+    console.log("remaining " + peopleRemaining);
   totalTimePast += numTimeIncrement;
   var stopsThisPass = [];
   var results = getPeopleFromPool(totalTimePast, poolPeople);
-
   poolPeople = results.stillInPool;
   peopleWaiting = _.union(peopleWaiting, results.waitingForElevator);
   peopleWaiting = _.sortBy(peopleWaiting, 'callId');

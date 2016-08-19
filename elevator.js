@@ -60,7 +60,7 @@ class elevator {
 
             this.people.push(person);
             if (this.destFlr === -1) {
-                this.destFlr = person.destFlr;
+                this.destFlr = person.endFloor;
                 this.setDir(this.destFlr);
             }
             return person;
