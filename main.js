@@ -66,11 +66,7 @@ var updateElevators = function (time, poolWaiting, poolOfElevators) {
         return person.startFloor === poolOfElevators[i].curFlr;
       });
 
-      if(peopleOnFloor.length > 0){
-        _.each(peopleOnFloor, function(person){
-          var logs = poolOfElevators[i].pickupPerson(time, person);
-        });
-      }
+        poolOfElevators[i].exchangePeople(time, peopleOnFloor);
     }
   }
 };

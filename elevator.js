@@ -46,22 +46,30 @@ class elevator {
     }
 
 
-    letPersonOff(floor, person) {
+    letPeopleOff() {
         if (this.people.length > 0) {
-            this.people = this.people.filter(function (p) {
+            var peopleWhoLeft = this.people.filter(function (p) {
                 return p.endFloor === this.curFlor;
             }, this);
+
+            this.people = peopleWhoLeft;
+
+            return peopleWhoLeft;
         }
+
+        return [];
     }
 
     exchangePeople(time, peopleOnFloor) {
+        var peopleWhoGotOn = [];
         _.each(peopleOnFloor, function (p) {
-            this.letPersonOn(time, p);
+            peopleWhoGotOn.push(this.letPersonOn(time, p));
         });
 
-        _.each(this.people, function (p) {
-            this.letPersonOff(floor, p);
-        });
+        var peopleWhoLeft = this.letPeopleOff();
+
+        console.log("Got On: " + peopleWhoGotOn);
+        console.log("Got Off: " + peopleWhoLeft);
     }
 
     move(dir) {
