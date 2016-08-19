@@ -4,6 +4,8 @@
     var poolOfElevators = [];
     var numTimeIncrement = 1;
 
+    
+
     var getPersonFromPool = function(time, poolPeople){};
     var updateElevators = function (time, poolWaiting, poolOfElevators) {
 
