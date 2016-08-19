@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('underscore');
+
 var Log = require('./log');
 
 var possibleDirs = {"UP": 1, "STILL": 0, "DOWN": -1};

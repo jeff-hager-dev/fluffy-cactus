@@ -68,6 +68,11 @@ var updateElevators = function (time, poolWaiting, poolOfElevators) {
     poolOfElevators[i].updatePosition(time, SelectNextFloor);
     if (poolOfElevators[i].status === 1) {
 
+
+      var peopleOnFloor = _.filter(poolWaiting, function (person) {
+        return person.startFloor === poolOfElevators[i].curFlr;
+      });
+
       peopleLeft += poolOfElevators[i].exchangePeople(time, peopleOnFloor);
     }
     console.log(poolOfElevators[i]);
