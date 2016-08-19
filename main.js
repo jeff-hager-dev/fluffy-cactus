@@ -10,13 +10,13 @@ var numTimeIncrement = 1;
 
 var getPeopleFromPool = function (time, poolPeople) {
 
-  var isItMyTime = function (person) {
-    return person.isItMyTime(time)
+  var isItMyTurn = function (person) {
+    return person.isItMyTurn(time)
   };
 
   return {
-    "waitingForElevator": _.filter(poolPeople, isItMyTime),
-    "stillInPool": _.reject(poolPeople, isItMyTime)
+    "waitingForElevator": _.filter(poolPeople, isItMyTurn),
+    "stillInPool": _.reject(poolPeople, isItMyTurn)
   };
 };
 
