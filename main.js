@@ -10,16 +10,10 @@
     };
 
     var totalTimePast = 0;
+
     while(poolPeople.length < 0){
-
-        // Add person to people waiting: Grab the next peron if it is their time
-
         peopleWaiting.push(getPersonFromPool(totalTimePast, poolPeople));
-
-        // Update Elevators
-
-        updateElevators(poolWaiting, poolOfElevators);
-
+        updateElevators(peopleWaiting, poolOfElevators);
         totalTimePast+=numTimeIncrement;
     }
 
