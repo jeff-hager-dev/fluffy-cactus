@@ -4,32 +4,22 @@ var _ = require('underscore');
 
 var Person = require('./person');
 var Elevator = require('./elevator');
-var poolPeople = [];
-var peopleWaiting = [];
-var poolOfElevators = [];
-var numTimeIncrement = 1;
-var data = require('./data/challenge1input.json');
-var output = {
-  "challengeId": data.challengeId,
-  "stops": []
-};
-var stopId = 1;
-
 
 class building {
   constructor(datafile) {
     this.peopleWaiting = [];
+    this.poolPeople = [];
     this.poolOfElevators = [];
     this.numTimeIncrement = 1;
-    this.output = {
-      "challengeId": data.challengeId,
-      "stops": []
-    };
     this.thisstopId = 1;
 
     if(datafile){
 
       var data = require(datafile);
+      this.output = {
+        "challengeId": data.challengeId,
+        "stops": []
+      };
 
       this.PopulateElevators(data);
       this.PopulatePoolOfPeople(data);
@@ -105,10 +95,10 @@ class building {
     var stopsThisPass = null;
     var results = null;
     while (this.peopleRemaining > 0) {
-      this.totalTimePast += numTimeIncrement;
+      this.totalTimePast += this.numTimeIncrement;
       stopsThisPass = [];
 
-      results = this.getPeopleFromPool(this.totalTimePast, poolPeople);
+      results = this.getPeopleFromPool(this.totalTimePast, this.poolPeople);
 
       this.poolPeople = results.stillInPool;
       this.peopleWaiting = _.union(this.peopleWaiting, results.waitingForElevator);
