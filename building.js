@@ -108,7 +108,7 @@ class building {
         continue;
       }
 
-      stopsThisPass = this.updateElevators(this.totalTimePast, this.peopleWaiting, this.poolOfElevators);
+      stopsThisPass = this.updateElevators();
       this.peopleRemaining -= stopsThisPass.length;
 
       _.union(output.stops, stopsThisPass);
