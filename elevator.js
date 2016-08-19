@@ -7,6 +7,8 @@ class elevator {
   constructor(name, startFlr, capacity) {
     this.destFlr = -1;
     this.curFlr = startFlr;
+    this.startFlr = startFlr;
+    this.status = 0;
     this.maxPpl = capacity;
     this.numPpl = -1;
     this.curDir = possibleDirs.STILL;
@@ -32,7 +34,22 @@ class elevator {
   };
 
   updatePosition(time, selectNextFloorFunc){
-    console.log("TODO");
+
+      //Current floor inc/dec
+      //update status
+      //call setDir
+      //call move
+      //set time
+      //select next floor if current and dest ===
+      if(this.status)
+
+      if(time % 2 == 0) {
+          this.move(this.curDir);
+
+      }
+
+
+      console.log("TODO");
   }
 
 
