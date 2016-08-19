@@ -30,8 +30,8 @@ var peopleRemaining = poolPeople.length;
 
 // To be replaced with a good algorithm
 var SelectNextFloor = function (curFlr) {
-    var nextFloorNumber=1;
-    return nextFloorNumber:
+    var person = peopleWaiting[0];
+    return person ? person.startFloor : 0;
 };
 
 
@@ -57,7 +57,7 @@ var getPeopleFromPool = function (time, poolPeople) {
 
 var updateElevators = function (time, poolWaiting, poolOfElevators) {
   for(let i = 0; i < poolOfElevators.length; i++){
-    poolOfElevators[i].updatePosition(time,SelectNextFloor);
+    poolOfElevators[i].updatePosition(time, SelectNextFloor);
     if(poolOfElevators[i].status=="AT_FLOOR"){
 
       var logs =  poolOfElevators[i].dropOffPeople(time);
