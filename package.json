@@ -1,0 +1,19 @@
+{
+  "name": "fluffy-cactus",
+  "version": "1.0.0",
+  "description": "fluffy-cactus",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeff-hager-dev/fluffy-cactus.git"
+  },
+  "author": "J. Nolan Hager <jeffrey.hager.dev@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeff-hager-dev/fluffy-cactus/issues"
+  },
+  "homepage": "https://github.com/jeff-hager-dev/fluffy-cactus#readme"
+}

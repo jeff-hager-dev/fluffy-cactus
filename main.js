@@ -1,33 +1,38 @@
-(function(){
-    'use strict';
+"use strict";
 
-    var Person = require('./person');
-    var poolPeople = [];
-    var peopleWaiting = [];
-    var poolOfElevators = [];
-    var numTimeIncrement = 1;
-    var data = require('./data/challenge1input.json');
+var _ = require('underscore');
 
-    for(var i = 0; i < data.calls.length; i++) {
-        var call = data.calls[i];
-        var newPerson = new Person(call.callId, call.callTime, call.startFloor, call.endFloor);
-        poolPeople.push(newPerson);
-        console.log(poolPeople);
-    }
+var poolPeople = [];
+var peopleWaiting = [];
+var poolOfElevators = [];
+var numTimeIncrement = 1;
 
-    // console.log(data);
 
-    var getPersonFromPool = function(time, poolPeople){};
-    var updateElevators = function (time, poolWaiting, poolOfElevators) {
+var getPeopleFromPool = function (time, poolPeople) {
 
-    };
+  var isItMyTime = function (person) {
+    return person.isItMyTime(time)
+  };
 
-    var totalTimePast = 0;
-/*
-    while(poolPeople.length < 0){
-        peopleWaiting.push(getPersonFromPool(totalTimePast, poolPeople));
-        updateElevators(peopleWaiting, poolOfElevators);
-        totalTimePast+=numTimeIncrement;
-    }*/
+  return {
+    "waitingForElevator": _.filter(poolPeople, isItMyTime),
+    "stillInPool": _.reject(poolPeople, isItMyTime)
+  };
+};
 
-})();
+var updateElevators = function (time, poolWaiting, poolOfElevators) {
+
+};
+
+var totalTimePast = 0;
+
+while (poolPeople.length < 0) {
+  totalTimePast += numTimeIncrement;
+  var results = getPeopleFromPool(totalTimePast, poolPeople);
+
+  poolPeople  = results.stillInPool;
+  peopleWaiting = _.union(peopleWaiting, results.waitingForElevator);
+
+  updateElevators(peopleWaiting, poolOfElevators);
+}
+
