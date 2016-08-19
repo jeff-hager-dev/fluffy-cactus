@@ -18,8 +18,8 @@ class elevator {
 
   pickupPerson(time, person) {
     if (this.numPpl < this.maxPpl) {
-      if(this.status)
-      this.people.push(person);
+      if (this.status)
+        this.people.push(person);
       this.numPpl += 1;
       if (this.destFlr === -1) {
         this.destFlr = person.destFlr;
@@ -31,7 +31,7 @@ class elevator {
     }
   };
 
-  updatePosition(time, selectNextFloorFunc){
+  updatePosition(time, selectNextFloorFunc) {
     console.log("TODO");
   }
 
