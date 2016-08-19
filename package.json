@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/jeff-hager-dev/fluffy-cactus/issues"
   },
-  "homepage": "https://github.com/jeff-hager-dev/fluffy-cactus#readme"
+  "homepage": "https://github.com/jeff-hager-dev/fluffy-cactus#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^3.0.1",
+    "mocha": "^3.0.2"
+  }
 }
