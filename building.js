@@ -21,28 +21,38 @@ class building {
     this.peopleWaiting = [];
     this.poolOfElevators = [];
     this.numTimeIncrement = 1;
-    var data = require(datafile);
     this.output = {
       "challengeId": data.challengeId,
       "stops": []
     };
     this.thisstopId = 1;
 
-    for (var i = 0; i < data.calls.length; i++) {
-      var call = data.calls[i];
-      var newPerson = new Person(call.callId, call.callTime, call.startFloor, call.endFloor);
-      poolPeople.push(newPerson);
-    }
+    if(datafile){
 
-    /**
-     * Populate Elevator from data.
-     */
+      var data = require(datafile);
+
+      this.PopulateElevators(data);
+      this.PopulatePoolOfPeople(data);
+    }
+  }
+
+  PopulateElevators(data){
     for (var k = 0; k < data.numberOfElevators; k++) {
       this.poolOfElevators.push(new Elevator(k, 1, data.maxCapacity));
     }
-
-    this.peopleRemaining = poolPeople.length;
   }
+
+  PopulatePoolOfPeople(data){
+
+    for (var i = 0; i < data.calls.length; i++) {
+      var call = data.calls[i];
+      var newPerson = new Person(call.callId, call.callTime, call.startFloor, call.endFloor);
+      this.poolPeople.push(newPerson);
+    }
+
+    this.peopleRemaining = this.poolPeople.length;
+  }
+
 
   SelectNextFloor(curFlr) {
     for (var i = 0; i < this.peopleWaiting.length; i++) {
@@ -74,7 +84,7 @@ class building {
     for (let i = 0; i < this.poolOfElevators.length; i++) {
       var curElevator = this.poolOfElevators[i];
 
-      curElevator.updatePosition(this.totalTimePast, SelectNextFloor);
+      curElevator.updatePosition(this.totalTimePast, this.SelectNextFloor);
       if (curElevator.status === 1) {
 
         var peopleOnFloor = _.filter(this.poolWaiting, function (person) {
