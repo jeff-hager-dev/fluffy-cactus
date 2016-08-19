@@ -23,7 +23,6 @@ class elevator {
     }
 
     updatePosition(time, selectNextFloorFunc) {
-
         if (this.destFlr === -1) {
             this.destFlr = selectNextFloorFunc(this.curFlr);
             this.setDir(this.destFlr);
@@ -36,10 +35,13 @@ class elevator {
             }
         }
 
-        if (!(this.status === statuses.PICKING_UP)) {
+        if (this.status != statuses.PICKING_UP) {
             if ((time % 2 == 0) && (this.status === statuses.BETWEEN_FLOORS)) {
                 this.status = statuses.AT_FLOOR;
                 this.move(this.curDir);
+            }
+            else if(this.curFlr === this.destFlr){
+              this.status = statuses.AT_FLOOR;
             }
             else {
                 this.status = statuses.BETWEEN_FLOORS;
