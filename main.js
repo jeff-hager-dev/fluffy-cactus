@@ -68,6 +68,7 @@ var updateElevators = function (time, poolWaiting, poolOfElevators) {
 
       peopleLeft += poolOfElevators[i].exchangePeople(time, peopleOnFloor);
     }
+    console.log(poolOfElevators[i]);
   }
   return peopleLeft;
 };
