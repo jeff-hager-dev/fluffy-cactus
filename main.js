@@ -1,3 +1,5 @@
+"use strict";
+
 var _ = require('underscore');
 
 var poolPeople = [];
@@ -25,13 +27,12 @@ var updateElevators = function (time, poolWaiting, poolOfElevators) {
 var totalTimePast = 0;
 
 while (poolPeople.length < 0) {
+  totalTimePast += numTimeIncrement;
   var results = getPeopleFromPool(totalTimePast, poolPeople);
 
   poolPeople  = results.stillInPool;
   peopleWaiting = _.union(peopleWaiting, results.waitingForElevator);
 
   updateElevators(peopleWaiting, poolOfElevators);
-
-  totalTimePast += numTimeIncrement;
 }
 
