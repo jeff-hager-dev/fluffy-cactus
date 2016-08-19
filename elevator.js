@@ -75,7 +75,7 @@ class elevator {
     letPeopleOff() {
         if (this.people.length > 0) {
             var peopleWhoLeft = this.people.filter(function (p) {
-                return p.endFloor === this.curFlor;
+                return p.endFloor === this.curFlr;
             }, this);
 
             this.people = peopleWhoLeft;
@@ -95,13 +95,13 @@ class elevator {
 
         var peopleWhoLeft = this.letPeopleOff();
 
-        console.log(this.name+ ":  Got On: ", peopleWhoGotOn.length);
-        console.log(this.name+ ":  Got Off: ", peopleWhoLeft.length);
+        console.log(this.name+ ":  Got On: ", peopleWhoGotOn.length,', flr: ', this.curFlr);
+        console.log(this.name+ ":  Got Off: ", peopleWhoLeft.length, ', flr: ', this.curFlr);
       return peopleWhoLeft.length;
     }
 
     move(dir) {
-        this.curFlor += possibleDirs[dir];
+        this.curFlr += possibleDirs[dir];
     }
 
 
