@@ -9,6 +9,11 @@ var peopleWaiting = [];
 var poolOfElevators = [];
 var numTimeIncrement = 1;
 var data = require('./data/challenge1input.json');
+var output = {
+  "challengeId": data.challengeId,
+  "stops": []
+};
+var stopId = 1;
 
 /**
  * Populate People from data.
@@ -46,11 +51,13 @@ var totalTimePast = 0;
 
 while (poolPeople.length < 0) {
   totalTimePast += numTimeIncrement;
+  var stopsThisPass = [];
   var results = getPeopleFromPool(totalTimePast, poolPeople);
 
   poolPeople  = results.stillInPool;
   peopleWaiting = _.union(peopleWaiting, results.waitingForElevator);
 
-  updateElevators(peopleWaiting, poolOfElevators);
+  stopsThisPass = updateElevators(peopleWaiting, poolOfElevators);
+  _.union(output.stops, stopsThisPass);
 }
 
