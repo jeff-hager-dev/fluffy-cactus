@@ -110,7 +110,7 @@ class building {
       }
 
       stopsThisPass = this.updateElevators();
-      this.peopleRemaining -= stopsThisPass.length;
+      this.peopleRemaining -= stopsThisPass;
 
       _.union(this.output.stops, stopsThisPass);
 

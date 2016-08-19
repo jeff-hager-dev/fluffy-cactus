@@ -95,8 +95,8 @@ class elevator {
 
         var peopleWhoLeft = this.letPeopleOff();
 
-        console.log("Got On: " + peopleWhoGotOn);
-        console.log("Got Off: " + peopleWhoLeft);
+        console.log("Got On: ", peopleWhoGotOn);
+        console.log("Got Off: ", peopleWhoLeft);
       return peopleWhoLeft.length;
     }
 
