@@ -113,8 +113,6 @@ class building {
       this.peopleRemaining -= stopsThisPass;
 
       _.union(this.output.stops, stopsThisPass);
-      console.log(this.peopleWaiting)
-      callback(this.totalTimePast);
     }
     console.log('done');
   }
