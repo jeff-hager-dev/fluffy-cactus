@@ -1,6 +1,6 @@
 'use strict';
 var possibleDirs = {"UP": 1, "STILL": 0, "DOWN": -1};
-var status = {"AT_FLOOR": 1, "BETWEEN_FLOORS": 2, "PICKING_UP": 3, "ON_FIRE": 4};
+var statuses = {"AT_FLOOR": 1, "BETWEEN_FLOORS": 2, "PICKING_UP": 3, "ON_FIRE": 4};
 
 
 class elevator {
@@ -8,7 +8,7 @@ class elevator {
     this.destFlr = -1;
     this.curFlr = startFlr;
     this.startFlr = startFlr;
-    this.status = 0;
+    this.status = statuses.AT_FLOOR;
     this.maxPpl = capacity;
     this.numPpl = -1;
     this.curDir = possibleDirs.STILL;
@@ -16,12 +16,13 @@ class elevator {
     this.name = name;
     this.startWaitTime = -1;
     this.endWaitTime = -1;
+    this.leftAtTime = -1;
   };
 
   pickupPerson(time, person) {
     if (this.numPpl < this.maxPpl) {
-      if(this.status)
-      this.people.push(person);
+      if (this.status)
+        this.people.push(person);
       this.numPpl += 1;
       if (this.destFlr === -1) {
         this.destFlr = person.destFlr;
@@ -33,23 +34,29 @@ class elevator {
     }
   };
 
-  updatePosition(time, selectNextFloorFunc){
+  updatePosition(time, selectNextFloorFunc) {
 
-      //Current floor inc/dec
-      //update status
-      //call setDir
-      //call move
-      //set time
-      //select next floor if current and dest ===
-      if(this.status)
+    if(this.destFlr === -1) {
+      this.destFlr = selectNextFloorFunc(this.curFlr);
+      this.setDir(this.destFlr);
+    }
 
-      if(time % 2 == 0) {
-          this.move(this.curDir);
-
+    //time = endwaittime - START MOVING
+    if(this.status = statuses.PICKING_UP){
+      if(time > this.endWaitTime) {
+        this.status = statuses.BETWEEN_FLOORS;
       }
+    }
 
-
-      console.log("TODO");
+    if(!(this.status === statuses.PICKING_UP)) {
+      if ((time % 2 == 0) && (this.status === statuses.BETWEEN_FLOORS)) {
+        this.status = statuses.AT_FLOOR;
+        this.move(this.curDir);
+      }
+      else {
+        this.status = statuses.BETWEEN_FLOORS;
+      }
+    }
   }
 
 
@@ -64,17 +71,20 @@ class elevator {
   };
 
   move(dir) {
-    this.curFlor += possibleDirs[dir];
+    this.curFlr += possibleDirs[dir];
   };
 
 
   setDir(flr) {
     if (flr < this.curFlr) {
       this.curDir = possibleDirs.DOWN;
-    }
 
-    else {
+    }
+    else if (flr > this.curFlr) {
       this.curDir = possibleDirs.UP;
+    }
+    else {
+      this.curDir = possibleDirs.STILL;
     }
   }
 }
