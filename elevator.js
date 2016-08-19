@@ -2,10 +2,11 @@
  * Created by CAM0729 on 8/19/2016.
  */
 var possibleDirs = {"UP": 1, "STILL": 0, "DOWN": -1};
+var status = {"AT_FLOOR": 1, "BETWEEN_FLOORS": 2, "PICKING_UP": 3, "ON_FIRE": 4};
+
 
 class elevator {
 
-    var status = {"AT_FLOOR": 1, "BETWEEN_FLOORS": 2, "ON_FIRE": 3};
 
     constructor() {
 
@@ -29,22 +30,28 @@ class elevator {
                 this.destFlr = person.destFlr;
                 this.setDir(this.destFlr);
             }
+            return true;
         }
-        else {
-            throw new Error("Elevator " + this.name + "is full.");
-        }
+        return false;
+
 
     };
 
 
     dropPerson = function (person) {
-        this.people = people.filter(function (p) {
-            return p.callId != person.callId;
-        });
-        this.numPpl -= 1;
-        if (this.numPpl === 0) {
-            this.curDir = possibleDirs.STILL;
+        this.status = status.AT_FLOOR;
+        if (this.numPpl > 0) {
+            this.people = people.filter(function (p) {
+                return p.callId != person.callId;
+            });
+            this.numPpl -= 1;
+            if (this.numPpl === 0) {
+                this.curDir = possibleDirs.STILL;
+            }
+            return true;
         }
+        return false;
+
     };
 
     move = function (dir) {
