@@ -4,6 +4,7 @@
   "description": "fluffy-cactus",
   "main": "main.js",
   "scripts": {
+    "start": "node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/jeff-hager-dev/fluffy-cactus/issues"
   },
-  "homepage": "https://github.com/jeff-hager-dev/fluffy-cactus#readme"
+  "homepage": "https://github.com/jeff-hager-dev/fluffy-cactus#readme",
+  "dependencies": {
+    "underscore": "^1.8.3"
+  }
 }
