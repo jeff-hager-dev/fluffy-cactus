@@ -1,3 +1,5 @@
+"use strict";
+
 class building{
     constructor(numOfElevators) {
         this.numOfElevators = numOfElevators;
@@ -8,3 +10,5 @@ class building{
         return "stuff was done here";
     }
 }
+
+module.exports = building;
