@@ -80,7 +80,10 @@ class elevator {
         return p.endFloor === this.curFlr;
       }, this);
 
-      this.people = peopleWhoLeft;
+      this.people = _.reject(this.people, function(p) {
+        return p.endFloor === this.curFlr;
+      }, this);
+
 
       return peopleWhoLeft;
     }
@@ -97,13 +100,13 @@ class elevator {
 
     var peopleWhoLeft = this.letPeopleOff();
 
-    console.log(this.name + ":  Got On: ", peopleWhoGotOn.length, ', flr: ', this.curFlr);
+    console.log(this.name + ":  Got On: ", this.people.length, ', flr: ', this.curFlr);
     console.log(this.name + ":  Got Off: ", peopleWhoLeft.length, ', flr: ', this.curFlr);
     return peopleWhoLeft.length;
   }
 
   move(dir) {
-    this.curFlr += possibleDirs[dir];
+    this.curFlr += dir;
   }
 
 
