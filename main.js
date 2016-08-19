@@ -30,8 +30,8 @@ var peopleRemaining = poolPeople.length;
 
 // To be replaced with a good algorithm
 var SelectNextFloor = function (curFlr) {
-    var nextFloorNumber=1;
-    return nextFloorNumber:
+    var person = peopleWaiting[0];
+    return person ? person.startFloor : 0;
 };
 
 
