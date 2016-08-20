@@ -91,6 +91,7 @@ class building {
         var stopStats = curElevator.exchangePeople(this.totalTimePast, peopleOnFloor);
         if (stopStats) {
           stopStats.stopId = this.output.stops.length + 1;
+          this.peopleWaiting = _.filter(this.peopleWaiting, function(p){ return stopStats.pickup.indexOf(p.callId) === -1; });
           this.output.stops.push(stopStats);
           peopleLeft += stopStats.dropoff.length;
         }
