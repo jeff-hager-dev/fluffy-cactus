@@ -13,7 +13,7 @@ class building {
     this.numTimeIncrement = 1;
     this.thisstopId = 1;
 
-    if(datafile){
+    if (datafile) {
 
       var data = require(datafile);
       this.output = {
@@ -26,13 +26,13 @@ class building {
     }
   }
 
-  PopulateElevators(data){
+  PopulateElevators(data) {
     for (var k = 0; k < data.numberOfElevators; k++) {
-      this.poolOfElevators.push(new Elevator(k, 1, data.maxCapacity));
+      this.poolOfElevators.push(new Elevator(k, 1, data.maxCapacity, data.minfloor, data.maxfloor));
     }
   }
 
-  PopulatePoolOfPeople(data){
+  PopulatePoolOfPeople(data) {
 
     for (var i = 0; i < data.calls.length; i++) {
       var call = data.calls[i];
@@ -75,7 +75,9 @@ class building {
     for (let i = 0; i < this.poolOfElevators.length; i++) {
       var curElevator = this.poolOfElevators[i];
       var context = this;
-      curElevator.updatePosition(this.totalTimePast, function(curFlr){ return context.SelectNextFloor(curFlr);});
+      curElevator.updatePosition(this.totalTimePast, function (curFlr) {
+        return context.SelectNextFloor(curFlr);
+      });
       if (curElevator.status === 1) {
 
         var peopleOnFloor = _.filter(peopleWaiting, function (person) {
@@ -87,12 +89,16 @@ class building {
         });
 
         var stopStats = curElevator.exchangePeople(this.totalTimePast, peopleOnFloor);
-        stopStats.stopId = this.output.stops.length+1;
-        this.output.stops.push(stopStats);
+        if (stopStats) {
+          stopStats.stopId = this.output.stops.length + 1;
+          this.output.stops.push(stopStats);
+          peopleLeft += stopStats.dropoff.length;
+        }
       }
 
       this.poolOfElevators[i] = curElevator;
     }
+    this.peopleRemaining -= peopleLeft;
   }
 
   run(callback) {
@@ -114,12 +120,12 @@ class building {
         continue;
       }
       console.log(this.peopleWaiting.length);
-      stopsThisPass = this.updateElevators();
-      this.peopleRemaining -= stopsThisPass;
+      this.updateElevators();
 
       _.union(this.output.stops, stopsThisPass);
+      console.log(this.output.stops);
     }
-    console.log(this.output);
+    console.log("done");
   }
 
 }

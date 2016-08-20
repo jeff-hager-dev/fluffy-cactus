@@ -9,7 +9,7 @@ var statuses = {"AT_FLOOR": 1, "BETWEEN_FLOORS": 2, "PICKING_UP": 3};
 
 
 class elevator {
-  constructor(name, startFlr, capacity) {
+  constructor(name, startFlr, capacity, minFlr, maxFlr) {
     this.destFlr = -1;
     this.curFlr = startFlr;
     this.startFlr = startFlr;
@@ -19,6 +19,8 @@ class elevator {
     this.curDir = possibleDirs.STILL;
     this.people = [];
     this.name = name;
+    this.minFlr = minFlr;
+    this.maxFlr = maxFlr;
     this.startWaitTime = -1;
     this.endWaitTime = -1;
     this.leftAtTime = -1;
@@ -111,21 +113,30 @@ class elevator {
 
 
     var peopleWhoLeft = this.letPeopleOff();
-
-    return {
-      "elevatorId": this.name,
-      "floor": this.curFlr,
-      "pickup": _.map(peopleWhoGotOn, function (p) {
-        return p.callId;
-      }),
-      "dropoff": _.map(peopleWhoLeft, function (p) {
-        return p.callId;
-      })
-    };
+    var log = null;
+    if (peopleWhoLeft.length > 0 || peopleWhoGotOn.length > 0) {
+      log = {
+        "elevatorId": this.name,
+        "floor": this.curFlr,
+        "pickup": _.map(peopleWhoGotOn, function (p) {
+          return p.callId;
+        }),
+        "dropoff": _.map(peopleWhoLeft, function (p) {
+          return p.callId;
+        })
+      };
+    }
+    return null;
   }
 
   move(dir) {
     this.curFlr += dir;
+    if (this.curFlr < this.minFlr) {
+      this.curFlr = this.minFlr;
+    }
+    if (this.curFlr > this.maxFlr) {
+      this.curFlr = this.maxFlr;
+    }
   }
 
 
