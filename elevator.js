@@ -125,6 +125,11 @@ class elevator {
           return p.callId;
         })
       };
+      var tmp = 1;
+    }
+    if(this.people.length === 1){
+      this.setDir(this.people[0].endFloor);
+      this.destFlr = this.people[0].endFloor;
     }
     return log;
   }
