@@ -4,7 +4,7 @@
 	"isActive": 1,
 	"minfloor": 1,
 	"maxfloor": 12,
-	"numberOfElevators": 3,
+	"numberOfElevators": 1,
 	"maxCapacity": 15,
 	"secondsPerFloor": 2,
 	"secondsPerFloorOverTenfloors": 1,

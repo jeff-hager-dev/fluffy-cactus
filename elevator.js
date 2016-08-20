@@ -26,8 +26,8 @@ class elevator {
 
   updatePosition(time, selectNextFloorFunc) {
     if (this.destFlr === -1) {
-      this.destFlr = selectNextFloorFunc(this.curFlr);
-      if(this.destFlr !== -1) {
+      this.destFlr = selectNextFloorFunc(this, this.curFlr);
+      if (this.destFlr !== -1) {
         this.setDir(this.destFlr);
       }
     }
@@ -70,6 +70,14 @@ class elevator {
         this.destFlr = person.endFloor;
         this.setDir(this.destFlr);
       }
+
+      if (this.curDir === -1 && this.destFlr >= person.endFloor) {
+        this.destFlr = person.endFloor;
+      }
+      if (this.curDir === 1 && this.destFlr <= person.endFloor) {
+        this.destFlr = person.endFloor;
+      }
+
       return person;
 
     }
@@ -81,7 +89,7 @@ class elevator {
         return p.endFloor === this.curFlr;
       }, this);
 
-      this.people = _.reject(this.people, function(p) {
+      this.people = _.reject(this.people, function (p) {
         return p.endFloor === this.curFlr;
       }, this);
 
@@ -101,10 +109,10 @@ class elevator {
 
     var peopleWhoLeft = this.letPeopleOff();
 
-    if(this.people.length) {
+    if (this.people.length) {
       console.log(this.name + ":   ON: ", this.people.length, ', flr: ', this.curFlr, ', DIR: ', this.curDir);
     }
-    if(peopleWhoLeft.length) {
+    if (peopleWhoLeft.length) {
       console.log(this.name + ":   OFF: ", peopleWhoLeft.length, ', flr: ', this.curFlr, ', DIR: ', this.curDir);
     }
     return peopleWhoLeft.length;

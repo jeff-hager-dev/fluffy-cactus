@@ -44,7 +44,7 @@ class building {
   }
 
 
-  SelectNextFloor(curFlr) {
+  SelectNextFloor(elev, curFlr) {
     for (var i = 0; i < this.peopleWaiting.length; i++) {
       var nextPossibleFloor = this.peopleWaiting[i].startFloor;
       var elevatorWithFloor = _.filter(this.poolOfElevators, function (elevator) {
