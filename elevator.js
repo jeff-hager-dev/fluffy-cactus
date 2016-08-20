@@ -103,19 +103,25 @@ class elevator {
   exchangePeople(time, peopleOnFloor) {
     var peopleWhoGotOn = [];
     _.each(peopleOnFloor, function (p) {
-      peopleWhoGotOn.push(this.letPersonOn(time, p));
+      var pr = this.letPersonOn(time, p);
+      if (pr) {
+        peopleWhoGotOn.push(pr);
+      }
     }, this);
 
 
     var peopleWhoLeft = this.letPeopleOff();
 
-    if (this.people.length) {
-      console.log(this.name + ":   ON: ", this.people.length, ', flr: ', this.curFlr, ', DIR: ', this.curDir);
-    }
-    if (peopleWhoLeft.length) {
-      console.log(this.name + ":   OFF: ", peopleWhoLeft.length, ', flr: ', this.curFlr, ', DIR: ', this.curDir);
-    }
-    return peopleWhoLeft.length;
+    return {
+      "elevatorId": this.name,
+      "floor": this.curFlr,
+      "pickup": _.map(peopleWhoGotOn, function (p) {
+        return p.callId;
+      }),
+      "dropoff": _.map(peopleWhoLeft, function (p) {
+        return p.callId;
+      })
+    };
   }
 
   move(dir) {

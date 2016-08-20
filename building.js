@@ -86,12 +86,13 @@ class building {
           return person.startFloor === curElevator.curFlr;
         });
 
-        peopleLeft += curElevator.exchangePeople(this.totalTimePast, peopleOnFloor);
+        var stopStats = curElevator.exchangePeople(this.totalTimePast, peopleOnFloor);
+        stopStats.stopId = this.output.stops.length+1;
+        this.output.stops.push(stopStats);
       }
 
       this.poolOfElevators[i] = curElevator;
     }
-    return peopleLeft;
   }
 
   run(callback) {
@@ -118,7 +119,7 @@ class building {
 
       _.union(this.output.stops, stopsThisPass);
     }
-    console.log('done');
+    console.log(this.output);
   }
 
 }
