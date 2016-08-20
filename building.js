@@ -119,13 +119,12 @@ class building {
       if (this.peopleWaiting.length === 0) {
         continue;
       }
-      console.log(this.peopleWaiting.length);
+
       this.updateElevators();
 
       _.union(this.output.stops, stopsThisPass);
-      console.log(this.output.stops);
     }
-    console.log("done");
+    console.log(JSON.stringify(this.output));
   }
 
 }

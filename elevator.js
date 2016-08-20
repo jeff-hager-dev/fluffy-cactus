@@ -126,16 +126,18 @@ class elevator {
         })
       };
     }
-    return null;
+    return log;
   }
 
   move(dir) {
     this.curFlr += dir;
     if (this.curFlr < this.minFlr) {
       this.curFlr = this.minFlr;
+      this.curDir = 0;
     }
     if (this.curFlr > this.maxFlr) {
       this.curFlr = this.maxFlr;
+      this.curDir = 0;
     }
   }
 
@@ -153,4 +155,5 @@ class elevator {
     }
   }
 }
+
 module.exports = elevator;
