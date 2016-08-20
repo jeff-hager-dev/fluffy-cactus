@@ -117,7 +117,7 @@ class building {
       this.peopleWaiting = _.union(this.peopleWaiting, results.waitingForElevator);
       this.peopleWaiting = _.sortBy(this.peopleWaiting, 'callId');
 
-      if (this.peopleWaiting.length === 0) {
+      if (this.peopleWaiting.length === 0 && this.peopleRemaining > 1) {
         continue;
       }
 
