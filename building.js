@@ -112,7 +112,7 @@ class building {
       if (this.peopleWaiting.length === 0) {
         continue;
       }
-
+      console.log(this.peopleWaiting.length);
       stopsThisPass = this.updateElevators();
       this.peopleRemaining -= stopsThisPass;
 
