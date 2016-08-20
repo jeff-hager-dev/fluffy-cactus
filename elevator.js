@@ -66,7 +66,7 @@ class elevator {
       }
 
       this.people.push(person);
-      if (this.destFlr === -1) {
+      if (this.destFlr === -1 || this.curDir === 0) {
         this.destFlr = person.endFloor;
         this.setDir(this.destFlr);
       }
